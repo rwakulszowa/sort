@@ -1,21 +1,18 @@
-import scala.util.Random
+package idk.yet
 
 
-class Sort(val data: Seq[Int]) {
+/** Exposes some sorting algorithms
+ *
+ *  Basically, this is just a temporary solution. I'm gonna organize it a bit
+ *  better, but not today...
+ */
+object Sorters {
 
-  def time[T](block: => T): T = {
-    val start = System.currentTimeMillis
-    val res = block
-    val totalTime = System.currentTimeMillis - start
-    println( "Elapsed time: %1d ms".format( totalTime ) )
-    res
-  }
+  def builtinSort(data: Seq[Int]): Seq[Int] = data.sorted
 
-  private def builtinSort(data: Seq[Int]): Seq[Int] = data.sorted
+  def insertionSort(data: Seq[Int]): Seq[Int] = {
 
-  private def insertionSort(data: Seq[Int]): Seq[Int] = {
-    
-    def loop(left: Seq[Int], right: Seq[Int]): Seq[Int] = 
+    def loop(left: Seq[Int], right: Seq[Int]): Seq[Int] =
       if ( right.isEmpty ) left
       else {
         loop( insert( left, right.head ), right.tail )
@@ -25,11 +22,11 @@ class Sort(val data: Seq[Int]) {
       val ( less, greater ) = arr.span( x => x < el )
       (less :+ el ) ++ greater
     }
-    
+
     loop(Seq.empty, data)
   }
 
-  private def mergeSort(data: Seq[Int]): List[Int] = {
+  def mergeSort(data: Seq[Int]): List[Int] = {
 
     def split(list: List[Int]): ( List[Int], List[Int] ) =
       list splitAt list.length / 2
@@ -37,11 +34,11 @@ class Sort(val data: Seq[Int]) {
     def merge(acc: List[Int])(left: List[Int], right: List[Int]): List[Int] = (left, right) match {
       case (Nil, rs) => acc ++: rs
       case (ls, Nil) => acc ++: ls
-      case (l :: ls, r :: rs) => if ( l < r ) merge( acc :+ l )( ls, rs ) 
+      case (l :: ls, r :: rs) => if ( l < r ) merge( acc :+ l )( ls, rs )
                                  else merge( acc :+ r )( ls, rs )
     }
 
-    def loop(list: List[Int]): List[Int] =
+    def loop(list: => List[Int]): List[Int] =
       if ( list.length <= 1 ) list
       else {
         val (left, right) = split( list )
@@ -50,21 +47,5 @@ class Sort(val data: Seq[Int]) {
 
     loop( data.toList )
   }
- 
-  def measure = {
-    println("Builtin sort")
-    time{ builtinSort( data ) }
 
-    println("Insertion sort")
-    time{ insertionSort( data ) }
-
-    println("Merge sort")
-    time{ mergeSort( data ) }
-  }
-
-}
-
-object Main extends App {
-  val problem = new Sort( Seq.fill( 10000 )( Random.nextInt( 100 ) ) ) 
-  problem.measure
 }
