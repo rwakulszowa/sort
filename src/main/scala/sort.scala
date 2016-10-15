@@ -65,6 +65,6 @@ class Sort(val data: Seq[Int]) {
 }
 
 object Main extends App {
-  val problem = new Sort( Seq.fill( 1000 )( Random.nextInt( 100 ) ) ) 
+  val problem = new Sort( Seq.fill( 10000 )( Random.nextInt( 100 ) ) ) 
   problem.measure
 }
