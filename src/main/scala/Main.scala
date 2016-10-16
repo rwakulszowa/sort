@@ -8,7 +8,8 @@ object Main extends App {
   val benchmark = new Benchmark( Map(
     "builtin" -> builtinSort,
     "insertion" -> insertionSort,
-    "merge" -> mergeSort
+    "merge" -> mergeSort,
+    "mergeFlip" -> mergeFlippingSort
   ) )
   benchmark.run
 
