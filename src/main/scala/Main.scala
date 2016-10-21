@@ -1,16 +1,16 @@
 package idk.yet
 
-import Sorters._
-
 
 object Main extends App {
 
-  val benchmark = new Benchmark( Map(
-    "builtin" -> builtinSort,
-    "insertion" -> insertionSort,
-    "merge" -> mergeSort,
-    "mergeFlip" -> mergeFlippingSort
-  ) )
+  val benchmark = new Benchmark(
+    Map(
+      "insertion" -> new InsertionSort[Int],
+      "merge" -> new MergeSort[Int],
+      "mergeFlip" -> new MergeFlipSort[Int]
+    )
+  )
+
   benchmark.run
 
 }

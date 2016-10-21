@@ -1,3 +1,5 @@
+package idk.yet
+
 import scala.math.Ordered
 
 

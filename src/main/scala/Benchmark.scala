@@ -1,16 +1,15 @@
 package idk.yet
 
 import scala.util.Random
-import Sorters._
 
 /** Solves some sorting problems with provided algorithms.
  *
  *  @constructor create a new benchmark for some algorithms
- *  @param algs a map of algorithm names and implementations
+ *  @param algs a map of algorithm names and classes
  */
-class Benchmark(val algs: Map[String, Seq[Int] => Seq[Int]]) {
+class Benchmark(val algs: Map[String, BaseSort[Int]]) {
 
-  val data = Seq.fill( 1000 )( Random.nextInt( 100 ) )
+  val data = Seq.fill( 10000 )( Random.nextInt( 100 ) )
 
   def time[T](block: => T): (T, Long) = {
     val start = System.currentTimeMillis
@@ -21,6 +20,11 @@ class Benchmark(val algs: Map[String, Seq[Int] => Seq[Int]]) {
 
   def run =
     algs.foreach {
-      case( name, alg ) => println( name + " - " + time { alg( data ) }._2 + "ms" )
+      case( name, alg ) => println(
+        name + 
+        " - " +
+        time { alg sort data }._2 +
+        "ms"
+      )
     }
 }

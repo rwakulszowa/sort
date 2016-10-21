@@ -1,9 +1,15 @@
+package idk.yet
+
+import scala.annotation.tailrec
+
+
 class InsertionSort[T <% Ordered[T]] extends BaseSort[T] {
 
   override def sort(data: Seq[T]): Seq[T] =
-    loop(Seq.empty, data)
-
-  def loop(left: Seq[T], right: Seq[T]): Seq[T] =
+    loop( Seq.empty, data )
+  
+  @tailrec
+  private def loop(left: Seq[T], right: Seq[T]): Seq[T] =
     if ( right.isEmpty ) left
     else loop( insert( left, right.head ), right.tail )
 
