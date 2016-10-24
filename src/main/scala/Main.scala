@@ -9,7 +9,8 @@ object Main extends App {
       // TODO: add a timeout
       "insertion" -> new InsertionSort[Int],
       "merge" -> new MergeSort[Int],
-      "mergeFlip" -> new MergeFlipSort[Int]
+      "mergeFlip" -> new MergeFlipSort[Int],
+      "quick" -> new QuickSort[Int]
     )
   )
 
