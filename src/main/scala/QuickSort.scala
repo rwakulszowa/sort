@@ -13,12 +13,13 @@ class QuickSort[T <% Ordered[T]] extends BaseSort[T] {
    *
    *  Complexity: O(log n) * partition
    */
-  private def loop(seq: Seq[T]): Seq[T] =
+  private def loop(seq: Seq[T]): Seq[T] = logger log {
     if ( seq.length <= 1 ) seq
     else {
       val (left, right) = partition( seq )
       ( loop( left.init ) :+ left.last ) ++ loop( right )
     }
+  }
   
   /** Divide seq into two almost-sorted groups
    *

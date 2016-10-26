@@ -8,14 +8,15 @@ class MergeSort[T <% Ordered[T]] extends BaseSort[T] {
   override def sort(data: Seq[T]): Seq[T] =
     loop( data )
 
-  private def loop(seq: Seq[T]): Seq[T] =
+  private def loop(seq: Seq[T]): Seq[T] = logger log {
     if ( seq.length <= 1 ) seq
     else {
       val (left, right) = split( seq )
       merge( Seq.empty )( loop( left ), loop ( right ) )
     }
+  }
 
-  private def split(seq: Seq[T]): ( Seq[T], Seq[T] ) =
+  private def split(seq: Seq[T]): ( Seq[T], Seq[T] ) = 
     seq splitAt seq.length / 2
   
   @tailrec

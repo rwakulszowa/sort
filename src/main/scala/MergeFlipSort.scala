@@ -17,12 +17,13 @@ class MergeFlipSort[T <% Ordered[T]] extends BaseSort[T] {
       List( Ordering[T].gt _, Ordering[T].lt _ ).toStream
     ).flatten
 
-  private def loop(seq: Seq[T], comps: Stream[Comparator]): Seq[T] =
+  private def loop(seq: Seq[T], comps: Stream[Comparator]): Seq[T] = logger log {
     if ( seq.length <= 1 ) seq
     else {
       val (left, right) = split( seq )
       merge( comps.head )( Seq.empty )( loop( left, comps.tail ), loop ( right, comps.tail ) )
     }
+  }
 
   private def split(seq: Seq[T]): ( Seq[T], Seq[T] ) =
     seq splitAt seq.length / 2

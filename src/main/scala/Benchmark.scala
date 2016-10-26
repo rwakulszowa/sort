@@ -9,7 +9,7 @@ import scala.util.Random
  */
 class Benchmark(val algs: Map[String, BaseSort[Int]]) {
 
-  val data = Seq.fill( 10000 )( Random.nextInt( 100 ) )
+  val data = Seq.fill( 10 )( Random.nextInt( 100 ) )
 
   def time[T](block: => T): (T, Long) = {
     val start = System.currentTimeMillis

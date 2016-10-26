@@ -13,7 +13,7 @@ class InsertionSort[T <% Ordered[T]] extends BaseSort[T] {
     if ( right.isEmpty ) left
     else loop( insert( left, right.head ), right.tail )
 
-  def insert(arr: Seq[T], el: T): Seq[T] = {
+  def insert(arr: Seq[T], el: T): Seq[T] = logger log {
     val ( less, greater ) = arr.span( x => x < el )
     (less :+ el ) ++ greater
   }
