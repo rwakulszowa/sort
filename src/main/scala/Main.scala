@@ -10,7 +10,8 @@ object Main extends App {
       "insertion" -> new InsertionSort[Int],
       "merge" -> new MergeSort[Int],
       "mergeFlip" -> new MergeFlipSort[Int],
-      "quick" -> new QuickSort[Int]
+      "quick" -> new QuickSort[Int],
+      "quickTernary" -> new QuickTernarySort[Int]
     )
   )
 
