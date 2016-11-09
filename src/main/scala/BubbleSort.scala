@@ -16,8 +16,7 @@ class BubbleSort[T <% Ordered[T]] extends BaseSort[T] {
    *
    *  Note: total complexity is O(n^3) for lists
    */
-  @tailrec
-  private def loop(data: Seq[T], acc: Seq[T]): Seq[T] =
+  def loop(data: Seq[T], acc: Seq[T]): Seq[T] =
     if ( data.isEmpty ) acc
     else {
       val bubbled = bubble( data )
@@ -34,7 +33,7 @@ class BubbleSort[T <% Ordered[T]] extends BaseSort[T] {
    *  Note: the main loop will need to access the last element of seq,
    *  which may be O(1) to O(n), depending on the data structure.
    */
-  private def bubble(seq: Seq[T]): Seq[T] =
+  def bubble(seq: Seq[T]): Seq[T] =
     seq.foldLeft( Seq.empty[T] )( append )
 
   /** Append el to seq on last or 2nd last position
@@ -45,11 +44,28 @@ class BubbleSort[T <% Ordered[T]] extends BaseSort[T] {
    *
    *  Note: it sucks :/
    */
-  private def append(seq: Seq[T], el: T): Seq[T] =
+  def append(seq: Seq[T], el: T): Seq[T] =
     if ( seq.isEmpty ) Seq[T]( el )
     else {
       if ( el > seq.last ) seq :+ el
       else seq.init :+ el :+ seq.last
     }
+
+}
+
+
+class LogBubbleSort[T <% Ordered[T]] extends BubbleSort[T] {
+
+  override def bubble(seq: Seq[T]): Seq[T] = Logger.log {
+    super.bubble(seq)
+  }
+
+  override def loop(data: Seq[T], acc: Seq[T]): Seq[T] = Logger.log {
+    super.loop(data, acc)
+  }
+
+  override def append(seq: Seq[T], el: T): Seq[T] = Logger.log {
+    super.append(seq, el)
+  }
 
 }
