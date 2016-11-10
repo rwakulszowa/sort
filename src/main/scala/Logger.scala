@@ -4,18 +4,13 @@ package idk.yet
 //TODO: derive each sort algorithm into OptimizedSort and LoggingSort
 //      make methods final in Optimized, wrap them in `log` in Logging
 object Logger {
- 
-  def log[T](block: => T): T = {
+
+  def log[T](name: String)
+            (block: => T)
+            (implicit id: String): T = {
     val res = block
-    println(res)
+    println(id, name, res)
     res
   }
-
-}
-
-
-object NoopLogger {
-
-  def log[T](block: T): T = block
 
 }

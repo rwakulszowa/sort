@@ -7,7 +7,7 @@ abstract class BaseSort[T <% Ordered[T]] {
   
   def sort(data: Seq[T]): Seq[T]
 
-  val logger = Logger
+  implicit val id = ""
 
 }
 
