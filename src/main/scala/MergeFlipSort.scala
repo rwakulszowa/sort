@@ -68,7 +68,21 @@ class LogMergeFlipSort[T <% Ordered[T]] extends MergeFlipSort[T] {
 }
 
 
-final class OptimizedMergeFlipSort[T <% Ordered[T]] extends MergeFlipSort[T] {}
+final class OptimizedMergeFlipSort[T <% Ordered[T]] extends MergeFlipSort[T] {
+
+  override def merge(comp: Comparator)
+                    (acc: Seq[T])
+                    (left: Seq[T], right: Seq[T])
+                    (implicit id: String): Seq[T] =
+    (left, right) match {
+      case (Nil, rs) => rs.reverse ++ acc
+      case (ls, Nil) => ls.reverse ++ acc
+      case (l :: ls, r :: rs) => if ( comp( l, r ) ) merge( comp )( l +: acc )( ls, r :: rs )
+                                 else                merge( comp )( r +: acc )( l :: ls, rs )
+    }
+
+
+}
 
 
 object MergeFlipSort {

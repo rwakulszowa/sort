@@ -57,7 +57,20 @@ class LogMergeSort[T <% Ordered[T]] extends MergeSort[T] {
 }
 
 
-final class OptimizedMergeSort[T <% Ordered[T]] extends MergeSort[T] {}
+final class OptimizedMergeSort[T <% Ordered[T]] extends MergeSort[T] {
+
+  override def merge(acc: Seq[T])
+                    (left: Seq[T], right: Seq[T])
+                    (implicit id: String): Seq[T] =
+    (left, right) match {
+      case (Nil, rs) => acc ++: rs
+      case (ls, Nil) => acc ++: ls
+      case (l :: ls, r :: rs) => if ( l < r ) merge( acc :+ l )( ls, r :: rs )
+                                 else         merge( acc :+ r )( l :: ls, rs )
+    }
+
+}
+
 
 
 object MergeSort {

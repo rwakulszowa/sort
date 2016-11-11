@@ -80,7 +80,17 @@ class LogBubbleSort[T <% Ordered[T]] extends BubbleSort[T] {
 }
 
 
-final class OptimizedBubbleSort[T <% Ordered[T]] extends BubbleSort[T] {}
+final class OptimizedBubbleSort[T <% Ordered[T]] extends BubbleSort[T] {
+
+  override def loop(data: Seq[T], acc: Seq[T])
+                   (implicit id: String): Seq[T] =
+    if ( data.isEmpty ) acc
+    else {
+      val bubbled = bubble( data )
+      loop( bubbled.init, bubbled.last +: acc )
+    }
+
+}
 
 
 object BubbleSort {

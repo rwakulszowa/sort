@@ -37,7 +37,14 @@ class LogInsertionSort[T <% Ordered[T]] extends InsertionSort[T] {
 }
 
 
-final class OptimizedInsertionSort[T <% Ordered[T]] extends InsertionSort[T] {}
+final class OptimizedInsertionSort[T <% Ordered[T]] extends InsertionSort[T] {
+
+  override def loop(left: Seq[T], right: Seq[T])
+                   (implicit id: String): Seq[T] =
+    if ( right.isEmpty ) left
+    else loop( insert( left, right.head ), right.tail )
+
+}
 
 
 object InsertionSort {
