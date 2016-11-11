@@ -78,3 +78,15 @@ class LogBubbleSort[T <% Ordered[T]] extends BubbleSort[T] {
     }
 
 }
+
+
+final class OptimizedBubbleSort[T <% Ordered[T]] extends BubbleSort[T] {}
+
+
+object BubbleSort {
+    
+  def makeLog[T <% Ordered[T]] = new LogBubbleSort[T]
+
+  def makeOptimized[T <% Ordered[T]] = new OptimizedBubbleSort[T]
+
+}

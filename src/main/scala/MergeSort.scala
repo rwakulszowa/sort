@@ -55,3 +55,15 @@ class LogMergeSort[T <% Ordered[T]] extends MergeSort[T] {
     }
 
 }
+
+
+final class OptimizedMergeSort[T <% Ordered[T]] extends MergeSort[T] {}
+
+
+object MergeSort {
+    
+  def makeLog[T <% Ordered[T]] = new LogMergeSort[T]
+
+  def makeOptimized[T <% Ordered[T]] = new OptimizedMergeSort[T]
+
+}

@@ -71,3 +71,15 @@ class LogQuickTernarySort[T <% Ordered[T]] extends QuickTernarySort[T] {
     }
 
 }
+
+
+final class OptimizedQuickTernarySort[T <% Ordered[T]] extends QuickTernarySort[T] {}
+
+
+object QuickTernarySort {
+    
+  def makeLog[T <% Ordered[T]] = new LogQuickTernarySort[T]
+
+  def makeOptimized[T <% Ordered[T]] = new OptimizedQuickTernarySort[T]
+
+}

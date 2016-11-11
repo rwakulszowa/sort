@@ -66,3 +66,15 @@ class LogMergeFlipSort[T <% Ordered[T]] extends MergeFlipSort[T] {
     }
 
 }
+
+
+final class OptimizedMergeFlipSort[T <% Ordered[T]] extends MergeFlipSort[T] {}
+
+
+object MergeFlipSort {
+    
+  def makeLog[T <% Ordered[T]] = new LogMergeFlipSort[T]
+
+  def makeOptimized[T <% Ordered[T]] = new OptimizedMergeFlipSort[T]
+
+}

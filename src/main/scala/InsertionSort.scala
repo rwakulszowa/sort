@@ -36,3 +36,14 @@ class LogInsertionSort[T <% Ordered[T]] extends InsertionSort[T] {
 
 }
 
+
+final class OptimizedInsertionSort[T <% Ordered[T]] extends InsertionSort[T] {}
+
+
+object InsertionSort {
+    
+  def makeLog[T <% Ordered[T]] = new LogInsertionSort[T]
+
+  def makeOptimized[T <% Ordered[T]] = new OptimizedInsertionSort[T]
+
+}
