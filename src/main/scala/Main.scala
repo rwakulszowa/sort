@@ -3,7 +3,7 @@ package idk.yet
 
 object Main extends App {
 
-  val runner = new Benchmark(
+  val runner = new Runner(
     List(
       BubbleSort,
       MergeSort,
@@ -14,6 +14,6 @@ object Main extends App {
     )
   )
 
-  runner.run
+  runner.all
 
 }

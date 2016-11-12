@@ -4,12 +4,11 @@ import scala.util.Random
 
 /** Solves some sorting problems with provided algorithms.
  *
- *  @constructor create a new benchmark for some algorithms
+ *  @constructor create a new runner
  *  @param algs a map of algorithm names and classes
  */
-class Benchmark(val algs: List[SortMaker]) {
+class Runner(val algs: List[SortMaker]) {
 
-  val data = Seq.fill( 1000 )( Random.nextInt( 100 ) )
 
   def time[T](block: => T): (T, Long) = {
     val start = System.currentTimeMillis
@@ -18,13 +17,40 @@ class Benchmark(val algs: List[SortMaker]) {
     ( res, totalTime )
   }
 
-  def run =
+
+  def benchmark = {
+
+    val data = Seq.fill( 1000 )( Random.nextInt( 100 ) )
+
     algs.map(a => (a.name, a.makeOptimized[Int])).foreach {
       case( name, alg ) => println(
-        name + 
+        name +
         " - " +
         time { alg sort data }._2 +
         "ms"
       )
     }
+
+  }
+
+
+  def verbose = {
+
+    val data = Seq.fill( 16 )( Random.nextInt( 16 ) )
+
+    algs.map(a => (a.name, a.makeLog[Int])).foreach {
+      case( name, alg ) => {
+        println(name)
+        alg sort data
+        println("")
+      }
+    }
+
+  }
+
+  def all = {
+    verbose
+    benchmark
+  }
+
 }
