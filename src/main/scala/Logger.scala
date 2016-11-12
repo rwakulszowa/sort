@@ -1,15 +1,25 @@
 package idk.yet
 
-//TODO: use a macro / Dynamic instead
-//TODO: derive each sort algorithm into OptimizedSort and LoggingSort
-//      make methods final in Optimized, wrap them in `log` in Logging
-object Logger {
+//TODO: use a macro
+
+class Logger {
+
+  var logs = List.empty[String]
 
   def log[T](name: String)
             (block: => T)
             (implicit id: String): T = {
     val res = block
-    println(id, name, res)
+    logs = (s"$id - $name - $res") :: logs
+    res
+  }
+
+  def time[T](block: => T): T = {
+    val start = System.currentTimeMillis
+    val res = block
+    val totalTime = System.currentTimeMillis - start
+
+    logs = (s"$totalTime ms") :: logs
     res
   }
 

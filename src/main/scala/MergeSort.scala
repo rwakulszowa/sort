@@ -37,20 +37,20 @@ class LogMergeSort[T <% Ordered[T]] extends MergeSort[T] {
   
   override def loop(seq: Seq[T])
                    (implicit id: String): Seq[T] =
-    Logger.log("loop") {
+    logger.log("loop") {
       super.loop(seq)(id + 1)
     }
 
   override def split(seq: Seq[T])
                     (implicit id: String): ( Seq[T], Seq[T] ) = 
-    Logger.log("split") {
+    logger.log("split") {
       super.split(seq)(id + 2)
     }
 
   override def merge(acc: Seq[T])
                     (left: Seq[T], right: Seq[T])
                     (implicit id: String): Seq[T] =
-    Logger.log("merge") {
+    logger.log("merge") {
       super.merge(acc)(left, right)(id + 3)
     }
 

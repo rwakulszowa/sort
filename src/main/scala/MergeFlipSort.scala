@@ -47,13 +47,13 @@ class LogMergeFlipSort[T <% Ordered[T]] extends MergeFlipSort[T] {
   
   override def loop(seq: Seq[T], comps: Stream[Comparator])
                    (implicit id: String): Seq[T] =
-    Logger.log("loop") {
+    logger.log("loop") {
       super.loop(seq, comps)(id + 1)
     }
 
   override def split(seq: Seq[T])
                     (implicit id: String): ( Seq[T], Seq[T] ) = 
-    Logger.log("split") {
+    logger.log("split") {
       super.split(seq)(id + 2)
     }
 
@@ -61,7 +61,7 @@ class LogMergeFlipSort[T <% Ordered[T]] extends MergeFlipSort[T] {
                     (acc: Seq[T])
                     (left: Seq[T], right: Seq[T])
                     (implicit id: String): Seq[T] =
-    Logger.log("merge") {
+    logger.log("merge") {
       super.merge(comp)(acc)(left, right)(id + 3)
     }
 

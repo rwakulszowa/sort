@@ -54,19 +54,19 @@ class LogQuickTernarySort[T <% Ordered[T]] extends QuickTernarySort[T] {
   
   override def loop(seq: Seq[T])
                    (implicit id: String): Seq[T] =
-    Logger.log("loop") {
+    logger.log("loop") {
       super.loop(seq)(id + 1)
     }
 
   override def partition(seq: Seq[T])
                         (implicit id: String): ( Seq[T], Seq[T], Seq[T] ) =
-    Logger.log("partition") {
+    logger.log("partition") {
       super.partition(seq)(id + 2)
     }
 
   override def pickPivot(seq: Seq[T])
                         (implicit id: String): T = 
-    Logger.log("pickPivot") {
+    logger.log("pickPivot") {
       super.pickPivot(seq)(id + 3)
     }
 

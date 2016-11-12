@@ -24,13 +24,13 @@ class LogInsertionSort[T <% Ordered[T]] extends InsertionSort[T] {
 
   override def loop(left: Seq[T], right: Seq[T])
                    (implicit id: String): Seq[T] = 
-    Logger.log("loop") {
+    logger.log("loop") {
       super.loop(left, right)(id + 1)
     }
 
   override def insert(arr: Seq[T], el: T)
                      (implicit id: String): Seq[T] = 
-    Logger.log("insert") {
+    logger.log("insert") {
       super.insert(arr, el)(id + 2)
     }
 

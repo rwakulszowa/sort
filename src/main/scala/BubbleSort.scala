@@ -61,19 +61,19 @@ class LogBubbleSort[T <% Ordered[T]] extends BubbleSort[T] {
 
   override def bubble(seq: Seq[T])
                      (implicit id: String): Seq[T] = 
-    Logger.log("bubble") {
+    logger.log("bubble") {
       super.bubble(seq)(id + 1)
     }
 
   override def loop(data: Seq[T], acc: Seq[T])
                    (implicit id: String): Seq[T] = 
-    Logger.log("loop") {
+    logger.log("loop") {
       super.loop(data, acc)(id + 2)
     }
 
   override def append(seq: Seq[T], el: T)
                      (implicit id: String): Seq[T] = 
-    Logger.log("append") {
+    logger.log("append") {
       super.append(seq, el)(id + 3)
     }
 
