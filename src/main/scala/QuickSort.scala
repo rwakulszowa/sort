@@ -79,4 +79,6 @@ object QuickSort extends SortMaker {
 
   def makeOptimized[T <% Ordered[T]] = new OptimizedQuickSort[T]
 
+  val name = "QuickSort"
+
 }

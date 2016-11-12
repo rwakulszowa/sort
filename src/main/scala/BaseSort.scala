@@ -18,4 +18,6 @@ trait SortMaker {
 
   def makeOptimized[T <% Ordered[T]]: BaseSort[T]
 
+  val name: String
+
 }

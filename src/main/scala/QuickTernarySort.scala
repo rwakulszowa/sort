@@ -82,4 +82,6 @@ object QuickTernarySort extends SortMaker {
 
   def makeOptimized[T <% Ordered[T]] = new OptimizedQuickTernarySort[T]
 
+  val name = "QuickTernarySort"
+
 }

@@ -99,4 +99,6 @@ object BubbleSort extends SortMaker {
 
   def makeOptimized[T <% Ordered[T]] = new OptimizedBubbleSort[T]
 
+  val name = "BubbleSort"
+
 }

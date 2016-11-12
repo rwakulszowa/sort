@@ -79,4 +79,6 @@ object MergeSort extends SortMaker {
 
   def makeOptimized[T <% Ordered[T]] = new OptimizedMergeSort[T]
 
+  val name = "MergeSort"
+
 }

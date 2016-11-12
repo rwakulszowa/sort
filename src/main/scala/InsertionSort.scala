@@ -53,4 +53,6 @@ object InsertionSort extends SortMaker {
 
   def makeOptimized[T <% Ordered[T]] = new OptimizedInsertionSort[T]
 
+  val name = "InsertionSort"
+
 }

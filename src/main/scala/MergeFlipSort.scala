@@ -91,4 +91,6 @@ object MergeFlipSort extends SortMaker {
 
   def makeOptimized[T <% Ordered[T]] = new OptimizedMergeFlipSort[T]
 
+  val name = "MergeFlipSort"
+
 }

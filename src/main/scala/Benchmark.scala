@@ -7,7 +7,7 @@ import scala.util.Random
  *  @constructor create a new benchmark for some algorithms
  *  @param algs a map of algorithm names and classes
  */
-class Benchmark(val algs: Map[String, BaseSort[Int]]) {
+class Benchmark(val algs: List[SortMaker]) {
 
   val data = Seq.fill( 1000 )( Random.nextInt( 100 ) )
 
@@ -19,7 +19,7 @@ class Benchmark(val algs: Map[String, BaseSort[Int]]) {
   }
 
   def run =
-    algs.foreach {
+    algs.map(a => (a.name, a.makeOptimized[Int])).foreach {
       case( name, alg ) => println(
         name + 
         " - " +
