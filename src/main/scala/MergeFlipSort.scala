@@ -85,7 +85,7 @@ final class OptimizedMergeFlipSort[T <% Ordered[T]] extends MergeFlipSort[T] {
 }
 
 
-object MergeFlipSort {
+object MergeFlipSort extends SortMaker {
     
   def makeLog[T <% Ordered[T]] = new LogMergeFlipSort[T]
 

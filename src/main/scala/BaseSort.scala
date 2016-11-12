@@ -11,3 +11,11 @@ abstract class BaseSort[T <% Ordered[T]] {
 
 }
 
+
+trait SortMaker {
+  
+  def makeLog[T <% Ordered[T]]: BaseSort[T]
+
+  def makeOptimized[T <% Ordered[T]]: BaseSort[T]
+
+}

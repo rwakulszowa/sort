@@ -47,7 +47,7 @@ final class OptimizedInsertionSort[T <% Ordered[T]] extends InsertionSort[T] {
 }
 
 
-object InsertionSort {
+object InsertionSort extends SortMaker {
     
   def makeLog[T <% Ordered[T]] = new LogInsertionSort[T]
 

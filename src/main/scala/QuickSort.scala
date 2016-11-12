@@ -73,7 +73,7 @@ class LogQuickSort[T <% Ordered[T]] extends QuickSort[T] {
 final class OptimizedQuickSort[T <% Ordered[T]] extends QuickSort[T] {}
 
 
-object QuickSort {
+object QuickSort extends SortMaker {
     
   def makeLog[T <% Ordered[T]] = new LogQuickSort[T]
 
