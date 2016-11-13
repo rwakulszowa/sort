@@ -1,16 +1,15 @@
 package idk.yet
 
-import scala.annotation.tailrec
 
+abstract class MergeFlipSort[T <% Ordered[T]] extends BaseSort[T] {
 
-class MergeFlipSort[T <% Ordered[T]] extends BaseSort[T] {
-
-  override def sort(data: Seq[T]): Seq[T] =
+  override def sort(data: Seq[T]): Seq[T] = logger.log("sort") {
     loop( data, comps )
+  }
 
   // An alias for a comparator function: < or >
   type Comparator = (T, T) => Boolean
-  
+
   // A stream (lazy sequence) of alternating comparators
   private val comps: Stream[Comparator] =
     Stream.continually(
@@ -28,7 +27,7 @@ class MergeFlipSort[T <% Ordered[T]] extends BaseSort[T] {
   def split(seq: Seq[T])
            (implicit id: String): ( Seq[T], Seq[T] ) =
     seq splitAt seq.length / 2
-  
+
   def merge(comp: Comparator)
            (acc: Seq[T])
            (left: Seq[T], right: Seq[T])
@@ -43,8 +42,10 @@ class MergeFlipSort[T <% Ordered[T]] extends BaseSort[T] {
 }
 
 
-class LogMergeFlipSort[T <% Ordered[T]] extends MergeFlipSort[T] {
-  
+class LogMergeFlipSort[T <% Ordered[T]]
+extends MergeFlipSort[T]
+with VerboseLoggable {
+
   override def loop(seq: Seq[T], comps: Stream[Comparator])
                    (implicit id: String): Seq[T] =
     logger.log("loop") {
@@ -52,7 +53,7 @@ class LogMergeFlipSort[T <% Ordered[T]] extends MergeFlipSort[T] {
     }
 
   override def split(seq: Seq[T])
-                    (implicit id: String): ( Seq[T], Seq[T] ) = 
+                    (implicit id: String): ( Seq[T], Seq[T] ) =
     logger.log("split") {
       super.split(seq)(id + 2)
     }
@@ -68,7 +69,9 @@ class LogMergeFlipSort[T <% Ordered[T]] extends MergeFlipSort[T] {
 }
 
 
-final class OptimizedMergeFlipSort[T <% Ordered[T]] extends MergeFlipSort[T] {
+final class OptimizedMergeFlipSort[T <% Ordered[T]]
+extends MergeFlipSort[T]
+with OptimizedLoggable {
 
   override def merge(comp: Comparator)
                     (acc: Seq[T])
@@ -86,7 +89,7 @@ final class OptimizedMergeFlipSort[T <% Ordered[T]] extends MergeFlipSort[T] {
 
 
 object MergeFlipSort extends SortMaker {
-    
+
   def makeLog[T <% Ordered[T]] = new LogMergeFlipSort[T]
 
   def makeOptimized[T <% Ordered[T]] = new OptimizedMergeFlipSort[T]

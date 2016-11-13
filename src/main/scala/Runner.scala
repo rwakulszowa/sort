@@ -9,42 +9,35 @@ import scala.util.Random
  */
 class Runner(val algs: List[SortMaker]) {
 
-  def benchmark = {
+  def benchmark: List[(String, List[String])] = {
 
     val data = Seq.fill( 1000 )( Random.nextInt( 100 ) )
 
-    algs.foreach {
+    algs.map(
       algObj => {
         val alg = algObj.makeOptimized[Int]
-        alg.logger.time { alg sort data }
-        println(algObj.name)
-        println(alg.logger.logs mkString "\n")
-        println("")
+        alg sort data
+        algObj.name -> alg.logger.logs.reverse
       }
-    }
+    )
 
   }
 
 
-  def verbose = {
+  def verbose: List[(String, List[String])] = {
 
     val data = Seq.fill( 16 )( Random.nextInt( 16 ) )
 
-    algs.foreach {
+    algs.map(
       algObj => {
         val alg = algObj.makeLog[Int]
         alg sort data
-        println(algObj.name)
-        println(alg.logger.logs mkString "\n")
-        println("")
+        algObj.name -> alg.logger.logs.reverse
       }
-    }
+    )
 
   }
 
-  def all = {
-    verbose
-    benchmark
-  }
+  def all = verbose ++ benchmark
 
 }

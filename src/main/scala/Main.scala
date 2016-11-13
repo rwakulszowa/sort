@@ -14,6 +14,14 @@ object Main extends App {
     )
   )
 
-  runner.all
+  val results = runner.all
+
+  results.foreach {
+    case (name, logs) => {
+      println(name)
+      println(logs mkString "\n")
+      println()
+    }
+  }
 
 }

@@ -1,15 +1,14 @@
 package idk.yet
 
-import scala.annotation.tailrec
 
+abstract class MergeSort[T <% Ordered[T]] extends BaseSort[T] {
 
-class MergeSort[T <% Ordered[T]] extends BaseSort[T] {
-
-  override def sort(data: Seq[T]): Seq[T] =
+  override def sort(data: Seq[T]): Seq[T] = logger.log("sort") {
     loop( data )
+  }
 
   def loop(seq: Seq[T])
-          (implicit id: String): Seq[T] = 
+          (implicit id: String): Seq[T] =
     if ( seq.length <= 1 ) seq
     else {
       val (left, right) = split( seq )
@@ -17,9 +16,9 @@ class MergeSort[T <% Ordered[T]] extends BaseSort[T] {
     }
 
   def split(seq: Seq[T])
-           (implicit id: String): ( Seq[T], Seq[T] ) = 
+           (implicit id: String): ( Seq[T], Seq[T] ) =
     seq splitAt seq.length / 2
-  
+
   def merge(acc: Seq[T])
            (left: Seq[T], right: Seq[T])
            (implicit id: String): Seq[T] =
@@ -33,8 +32,10 @@ class MergeSort[T <% Ordered[T]] extends BaseSort[T] {
 }
 
 
-class LogMergeSort[T <% Ordered[T]] extends MergeSort[T] {
-  
+class LogMergeSort[T <% Ordered[T]]
+extends MergeSort[T]
+with VerboseLoggable {
+
   override def loop(seq: Seq[T])
                    (implicit id: String): Seq[T] =
     logger.log("loop") {
@@ -42,7 +43,7 @@ class LogMergeSort[T <% Ordered[T]] extends MergeSort[T] {
     }
 
   override def split(seq: Seq[T])
-                    (implicit id: String): ( Seq[T], Seq[T] ) = 
+                    (implicit id: String): ( Seq[T], Seq[T] ) =
     logger.log("split") {
       super.split(seq)(id + 2)
     }
@@ -57,7 +58,9 @@ class LogMergeSort[T <% Ordered[T]] extends MergeSort[T] {
 }
 
 
-final class OptimizedMergeSort[T <% Ordered[T]] extends MergeSort[T] {
+final class OptimizedMergeSort[T <% Ordered[T]]
+extends MergeSort[T]
+with OptimizedLoggable {
 
   override def merge(acc: Seq[T])
                     (left: Seq[T], right: Seq[T])
@@ -74,7 +77,7 @@ final class OptimizedMergeSort[T <% Ordered[T]] extends MergeSort[T] {
 
 
 object MergeSort extends SortMaker {
-    
+
   def makeLog[T <% Ordered[T]] = new LogMergeSort[T]
 
   def makeOptimized[T <% Ordered[T]] = new OptimizedMergeSort[T]

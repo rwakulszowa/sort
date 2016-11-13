@@ -1,10 +1,11 @@
 package idk.yet
 
 
-class QuickTernarySort[T <% Ordered[T]] extends BaseSort[T] {
+abstract class QuickTernarySort[T <% Ordered[T]] extends BaseSort[T] {
 
-  override def sort(data: Seq[T]): Seq[T] =
+  override def sort(data: Seq[T]): Seq[T] = logger.log("sort") {
     loop( data )
+  }
   
   /** Main quick sort loop
    *
@@ -21,10 +22,10 @@ class QuickTernarySort[T <% Ordered[T]] extends BaseSort[T] {
       val (left, mid, right) = partition( seq )
       loop( left ) ++ mid  ++ loop( right )
     }
-  
+
   /** Divide seq into three almost-sorted groups
    *
-   *  Divides seq into left, mid and right, where all elements of left are 
+   *  Divides seq into left, mid and right, where all elements of left are
    *  < pivot, all elements of mid are == pivot, and all elements of right
    *  are > pivot.
    *
@@ -46,12 +47,14 @@ class QuickTernarySort[T <% Ordered[T]] extends BaseSort[T] {
   def pickPivot(seq: Seq[T])
                (implicit id: String): T =
     seq.last
-  
+
 }
 
 
-class LogQuickTernarySort[T <% Ordered[T]] extends QuickTernarySort[T] {
-  
+class LogQuickTernarySort[T <% Ordered[T]]
+extends QuickTernarySort[T]
+with VerboseLoggable {
+
   override def loop(seq: Seq[T])
                    (implicit id: String): Seq[T] =
     logger.log("loop") {
@@ -65,7 +68,7 @@ class LogQuickTernarySort[T <% Ordered[T]] extends QuickTernarySort[T] {
     }
 
   override def pickPivot(seq: Seq[T])
-                        (implicit id: String): T = 
+                        (implicit id: String): T =
     logger.log("pickPivot") {
       super.pickPivot(seq)(id + 3)
     }
@@ -73,11 +76,13 @@ class LogQuickTernarySort[T <% Ordered[T]] extends QuickTernarySort[T] {
 }
 
 
-final class OptimizedQuickTernarySort[T <% Ordered[T]] extends QuickTernarySort[T] {}
+final class OptimizedQuickTernarySort[T <% Ordered[T]]
+extends QuickTernarySort[T]
+with OptimizedLoggable {}
 
 
 object QuickTernarySort extends SortMaker {
-    
+
   def makeLog[T <% Ordered[T]] = new LogQuickTernarySort[T]
 
   def makeOptimized[T <% Ordered[T]] = new OptimizedQuickTernarySort[T]

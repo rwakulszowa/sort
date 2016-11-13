@@ -1,11 +1,12 @@
 package idk.yet
 
 
-class InsertionSort[T <% Ordered[T]] extends BaseSort[T] {
+abstract class InsertionSort[T <% Ordered[T]] extends BaseSort[T] {
 
-  override def sort(data: Seq[T]): Seq[T] =
+  override def sort(data: Seq[T]): Seq[T] = logger.log("sort") {
     loop( Seq.empty, data )
-  
+  }
+
   def loop(left: Seq[T], right: Seq[T])
           (implicit id: String): Seq[T] =
     if ( right.isEmpty ) left
@@ -20,16 +21,18 @@ class InsertionSort[T <% Ordered[T]] extends BaseSort[T] {
 }
 
 
-class LogInsertionSort[T <% Ordered[T]] extends InsertionSort[T] {
+class LogInsertionSort[T <% Ordered[T]]
+extends InsertionSort[T]
+with VerboseLoggable {
 
   override def loop(left: Seq[T], right: Seq[T])
-                   (implicit id: String): Seq[T] = 
+                   (implicit id: String): Seq[T] =
     logger.log("loop") {
       super.loop(left, right)(id + 1)
     }
 
   override def insert(arr: Seq[T], el: T)
-                     (implicit id: String): Seq[T] = 
+                     (implicit id: String): Seq[T] =
     logger.log("insert") {
       super.insert(arr, el)(id + 2)
     }
@@ -37,7 +40,9 @@ class LogInsertionSort[T <% Ordered[T]] extends InsertionSort[T] {
 }
 
 
-final class OptimizedInsertionSort[T <% Ordered[T]] extends InsertionSort[T] {
+final class OptimizedInsertionSort[T <% Ordered[T]]
+extends InsertionSort[T]
+with OptimizedLoggable {
 
   override def loop(left: Seq[T], right: Seq[T])
                    (implicit id: String): Seq[T] =
@@ -48,7 +53,7 @@ final class OptimizedInsertionSort[T <% Ordered[T]] extends InsertionSort[T] {
 
 
 object InsertionSort extends SortMaker {
-    
+
   def makeLog[T <% Ordered[T]] = new LogInsertionSort[T]
 
   def makeOptimized[T <% Ordered[T]] = new OptimizedInsertionSort[T]
