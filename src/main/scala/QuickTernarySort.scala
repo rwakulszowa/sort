@@ -3,10 +3,10 @@ package idk.yet
 
 abstract class QuickTernarySort[T <% Ordered[T]] extends BaseSort[T] {
 
-  override def sort(data: Seq[T]): Seq[T] = logger.log("sort") {
+  override def sort(data: Seq[T]): Seq[T] = logger.log("sort")(data) {
     loop( data )
   }
-  
+
   /** Main quick sort loop
    *
    *  Divide seq into 3 groups until subsequences contain <= 1 element.
@@ -57,19 +57,19 @@ with VerboseLoggable {
 
   override def loop(seq: Seq[T])
                    (implicit id: String): Seq[T] =
-    logger.log("loop") {
+    logger.log("loop")(seq) {
       super.loop(seq)(id + 1)
     }
 
   override def partition(seq: Seq[T])
                         (implicit id: String): ( Seq[T], Seq[T], Seq[T] ) =
-    logger.log("partition") {
+    logger.log("partition")(seq) {
       super.partition(seq)(id + 2)
     }
 
   override def pickPivot(seq: Seq[T])
                         (implicit id: String): T =
-    logger.log("pickPivot") {
+    logger.log("pickPivot")(seq) {
       super.pickPivot(seq)(id + 3)
     }
 

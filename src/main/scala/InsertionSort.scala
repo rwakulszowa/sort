@@ -3,7 +3,7 @@ package idk.yet
 
 abstract class InsertionSort[T <% Ordered[T]] extends BaseSort[T] {
 
-  override def sort(data: Seq[T]): Seq[T] = logger.log("sort") {
+  override def sort(data: Seq[T]): Seq[T] = logger.log("sort")(data) {
     loop( Seq.empty, data )
   }
 
@@ -27,13 +27,13 @@ with VerboseLoggable {
 
   override def loop(left: Seq[T], right: Seq[T])
                    (implicit id: String): Seq[T] =
-    logger.log("loop") {
+    logger.log("loop")(left, right) {
       super.loop(left, right)(id + 1)
     }
 
   override def insert(arr: Seq[T], el: T)
                      (implicit id: String): Seq[T] =
-    logger.log("insert") {
+    logger.log("insert")(arr, el) {
       super.insert(arr, el)(id + 2)
     }
 

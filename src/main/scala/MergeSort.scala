@@ -3,7 +3,7 @@ package idk.yet
 
 abstract class MergeSort[T <% Ordered[T]] extends BaseSort[T] {
 
-  override def sort(data: Seq[T]): Seq[T] = logger.log("sort") {
+  override def sort(data: Seq[T]): Seq[T] = logger.log("sort")(data) {
     loop( data )
   }
 
@@ -38,20 +38,20 @@ with VerboseLoggable {
 
   override def loop(seq: Seq[T])
                    (implicit id: String): Seq[T] =
-    logger.log("loop") {
+    logger.log("loop")(seq) {
       super.loop(seq)(id + 1)
     }
 
   override def split(seq: Seq[T])
                     (implicit id: String): ( Seq[T], Seq[T] ) =
-    logger.log("split") {
+    logger.log("split")(seq) {
       super.split(seq)(id + 2)
     }
 
   override def merge(acc: Seq[T])
                     (left: Seq[T], right: Seq[T])
                     (implicit id: String): Seq[T] =
-    logger.log("merge") {
+    logger.log("merge")(acc, left, right) {
       super.merge(acc)(left, right)(id + 3)
     }
 

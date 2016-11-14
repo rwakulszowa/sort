@@ -3,7 +3,7 @@ package idk.yet
 
 abstract class BubbleSort[T <% Ordered[T]] extends BaseSort[T] {
 
-  override def sort(data: Seq[T]): Seq[T] = logger.log("sort") {
+  override def sort(data: Seq[T]): Seq[T] = logger.log("sort")(data) {
     loop( data, Seq.empty )
   }
 
@@ -62,19 +62,19 @@ with VerboseLoggable {
 
   override def bubble(seq: Seq[T])
                      (implicit id: String): Seq[T] =
-    logger.log("bubble") {
+    logger.log("bubble")(seq) {
       super.bubble(seq)(id + 1)
     }
 
   override def loop(data: Seq[T], acc: Seq[T])
                    (implicit id: String): Seq[T] =
-    logger.log("loop") {
+    logger.log("loop")(data, acc) {
       super.loop(data, acc)(id + 2)
     }
 
   override def append(seq: Seq[T], el: T)
                      (implicit id: String): Seq[T] =
-    logger.log("append") {
+    logger.log("append")(seq, el) {
       super.append(seq, el)(id + 3)
     }
 
