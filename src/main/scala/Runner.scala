@@ -9,7 +9,7 @@ import scala.util.Random
  */
 class Runner(val algs: List[SortMaker]) {
 
-  def benchmark: List[(String, List[String])] = {
+  def benchmark: List[(String, List[Log])] = {
 
     val data = Seq.fill( 1000 )( Random.nextInt( 100 ) )
 
@@ -24,7 +24,7 @@ class Runner(val algs: List[SortMaker]) {
   }
 
 
-  def verbose: List[(String, List[String])] = {
+  def verbose: List[(String, List[Log])] = {
 
     val data = Seq.fill( 16 )( Random.nextInt( 16 ) )
 
