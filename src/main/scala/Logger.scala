@@ -4,14 +4,14 @@ package idk.yet
 abstract class Log {
 
   override def toString = this match {
-    case TimeLog(id, name, args, time) => id :: name :: time :: Nil mkString "\n"
-    case ResultLog(id, name, args, result) => id :: name :: (args mkString "\n") :: result :: Nil mkString "\n"
+    case TimeLog(id, caller, name, args, time) => id :: name :: time :: Nil mkString "\n"
+    case ResultLog(id, caller, name, args, result) => id :: caller :: name :: (args mkString "\n") :: result :: Nil mkString "\n"
   }
 
 }
 
-case class TimeLog(id: String, name: String, args: Seq[Any], time: Long) extends Log
-case class ResultLog(id: String, name: String, args: Seq[Any], result: Any) extends Log
+case class TimeLog(id: String, caller: String, name: String, args: Seq[Any], time: Long) extends Log
+case class ResultLog(id: String, caller: String, name: String, args: Seq[Any], result: Any) extends Log
 
 
 abstract class Logger {
@@ -28,7 +28,7 @@ abstract class Logger {
              (block: => T)
              (implicit id: String): T = {
     val res = block
-    logs = ResultLog(id, name, args, res) :: logs
+    logs = ResultLog(id, id.init, name, args, res) :: logs
     res
   }
 
@@ -39,7 +39,7 @@ abstract class Logger {
     val start = System.currentTimeMillis
     val res = block
     val totalTime = System.currentTimeMillis - start
-    logs = TimeLog(id, name, args, totalTime) :: logs
+    logs = TimeLog(id, id.init, name, args, totalTime) :: logs
     res
   }
 
@@ -50,7 +50,7 @@ trait Loggable {
 
   val logger: Logger
 
-  implicit val id = ""
+  implicit val id = "0"
 
 }
 
