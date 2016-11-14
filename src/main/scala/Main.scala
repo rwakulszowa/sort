@@ -3,18 +3,25 @@ package idk.yet
 
 object Main extends App {
 
-  val benchmark = new Benchmark(
-    Map(
-      //"bubble" -> new BubbleSort[Int],  // very very slow
-      // TODO: add a timeout
-      "insertion" -> new InsertionSort[Int],
-      "merge" -> new MergeSort[Int],
-      "mergeFlip" -> new MergeFlipSort[Int],
-      "quick" -> new QuickSort[Int],
-      "quickTernary" -> new QuickTernarySort[Int]
+  val runner = new Runner(
+    List(
+      BubbleSort,
+      MergeSort,
+      MergeFlipSort,
+      InsertionSort,
+      QuickSort,
+      QuickTernarySort
     )
   )
 
-  benchmark.run
+  val results = runner.all
+
+  results.foreach {
+    case (name, logs) => {
+      println(name)
+      println(logs mkString "\n")
+      println()
+    }
+  }
 
 }
