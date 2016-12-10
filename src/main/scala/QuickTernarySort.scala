@@ -1,5 +1,7 @@
 package idk.yet
 
+import scala.collection.mutable.MutableList
+
 
 abstract class QuickTernarySort[T <% Ordered[T]] extends BaseSort[T] {
 
@@ -19,7 +21,8 @@ abstract class QuickTernarySort[T <% Ordered[T]] extends BaseSort[T] {
           (implicit id: String): Seq[T] =
     if ( seq.length <= 1 ) seq
     else {
-      val (left, mid, right) = partition( seq )
+      val parts = partition( seq )
+      val (left, mid, right) = (parts(0), parts(1), parts(2))
       loop( left ) ++ mid  ++ loop( right )
     }
 
@@ -32,11 +35,20 @@ abstract class QuickTernarySort[T <% Ordered[T]] extends BaseSort[T] {
    *  Complexity: O(n) + pickPivot
    */
   def partition(seq: Seq[T])
-               (implicit id: String): ( Seq[T], Seq[T], Seq[T] ) = {
+               (implicit id: String): Seq[Seq[T]] = {
     val pivot = pickPivot( seq )
-    ( seq filter ( a => a < pivot ),
-      seq filter ( a => a == pivot ),
-      seq filter ( a => a > pivot ) )
+    val ans = List.fill(3)(MutableList.empty[T])
+
+    seq.foreach { x=>
+      val index = 
+        if (x < pivot) 0
+        else if (x > pivot) 2
+        else 1
+      x +=: ans(index)
+    }
+
+    ans
+    
   }
 
   /** Pick a pivot value
@@ -62,7 +74,7 @@ with VerboseLoggable {
     }
 
   override def partition(seq: Seq[T])
-                        (implicit id: String): ( Seq[T], Seq[T], Seq[T] ) =
+                        (implicit id: String): Seq[Seq[T]] =
     logger.log("partition")(seq) {
       super.partition(seq)(id + 2)
     }

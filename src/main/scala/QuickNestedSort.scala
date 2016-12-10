@@ -1,5 +1,7 @@
 package idk.yet
 
+import scala.collection.mutable.MutableList
+
 
 abstract class QuickNestedSort[T <% Ordered[T]] extends BaseSort[T] {
 
@@ -64,11 +66,11 @@ abstract class QuickNestedSort[T <% Ordered[T]] extends BaseSort[T] {
   def partition(seq: Seq[T])
                (implicit id: String): Seq[Seq[T]] = {
     val pivot = pickPivot( seq )
-    var ans = List.fill(2 * depth + 1)(List.empty[T])  // a list of empty lists
+    var ans = List.fill(2 * depth + 1)(MutableList.empty[T])  // a list of empty lists
 
     seq.foreach { x =>
       val index = pivot.locate(x)
-      ans = ans.updated(index, x :: ans(index))
+      x +=: ans(index)
     }
 
     ans
