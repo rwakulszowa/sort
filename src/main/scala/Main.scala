@@ -10,7 +10,8 @@ object Main extends App {
       MergeFlipSort,
       InsertionSort,
       QuickSort,
-      QuickTernarySort
+      QuickTernarySort,
+      QuickNestedSort
     )
   )
 
